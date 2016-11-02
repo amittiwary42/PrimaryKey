@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register</title>
+    <link rel="stylesheet" href="css/materialize.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" REL="STYLESHEET" />
+
+    <script src="js/react.min.js"></script>
+    <script src="js/react-dom.min.js"></script>
+    <script src="js/browser.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+
+</head>
+<body>
+
+    <div class="container" style="padding-top: 150px;"><div id="container"></div></div>
+
+    <script type="text/babel">
+      var Signup = React.createClass({
+          render: function(){
+            return (<div className="row">
+              <div className="input-field col s4"><label>First Name</label><input type="text" ref="firstname" /></div>
+              <div className="input-field col s4"><label>Middle Name</label><input type="text" ref="middlename" /></div>
+              <div className="input-field col s4"><label>Last Name</label><input type="text" ref="lastname" /></div>
+              <div className="input-field col s12"><label>Email ID</label><input type="email" ref="email" /></div>
+              <div className="input-field col s12"><label>Email Type</label><input type="text" ref="emailtitle" /></div>
+
+              <div className="input-field col s12"><label>Password</label><input type="password" ref="password" /></div>
+              <div><button className="btn" onClick={this.submit}>Sign Up</button></div>
+            </div>
+          );
+        },
+        submit: function(e){
+          e.preventDefault()
+          var formdata = {
+            "first_name" : this.refs.firstname.value,
+            "middle_name" : this.refs.middlename.value,
+            "last_name" : this.refs.lastname.value,
+            "email" : this.refs.email.value,
+            "email_title" : this.refs.emailtitle.value,
+            "password" : this.refs.password.value,
+
+          }
+          //var jsondata = JSON.parse(formdata);
+          $.ajax({
+            url: 'api/profiles/register',
+            type: 'POST',
+            dataType: 'JSON',
+            data: formdata,
+
+
+            success: function(data){
+              console.log(data);
+            },
+            error: function(xhr, resp, text) {
+              console.log(xhr, resp, text);
+            }
+          });
+        }
+
+
+      });
+
+
+
+
+
+
+
+
+
+        ReactDOM.render(
+            <Signup />,
+            document.getElementById('container')
+        );
+    </script>
+
+</body>
+</html>
